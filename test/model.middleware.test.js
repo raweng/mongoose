@@ -38,6 +38,16 @@ describe('model middleware', function(){
       called++;
     });
 
+    /*
+      Testing out the async post save hook
+    */
+    schema.post('save', function(obj, next) {
+      setTimeout(function() {
+        assert.equal(obj.title,'Little Green Running Hood');
+        next();
+      }, 10)
+    })
+
     schema.post('save', function (obj) {
       assert.equal(obj.title,'Little Green Running Hood');
       assert.equal(2, called);
